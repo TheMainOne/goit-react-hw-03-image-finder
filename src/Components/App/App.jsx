@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import Searchbar from "./Searchbar/Searchbar";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import Button from "../Button/Button";
