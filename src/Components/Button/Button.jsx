@@ -14,7 +14,7 @@ const Button = ({ data, onClick }) => {
       ) : (
         <Wrapper>
           <LoadMoreBtn type="button" disabled="disabled">
-            No more pictures
+            No more pictures available
           </LoadMoreBtn>
         </Wrapper>
       )}
