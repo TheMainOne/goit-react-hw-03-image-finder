@@ -1,10 +1,11 @@
 import React from "react";
+import { GelleryItem, GelleryImage } from "./ImageGelleryItem.styled";
 
 const ImageGalleryItem = ({ data, onImageClick }) => {
   return data.map((item) => (
-    <li className="gallery-item" key={item.webformatURL} onClick={onImageClick}>
-      <img src={item.webformatURL} width={400} alt={item.tags} path={item.largeImageURL}/>
-    </li>
+    <GelleryItem className="gallery-item" key={item.webformatURL} onClick={onImageClick}>
+      <GelleryImage src={item.webformatURL} width={400} alt={item.tags} path={item.largeImageURL}/>
+    </GelleryItem>
   ));
 };
 

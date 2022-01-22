@@ -4,6 +4,7 @@ import ImageGallery from "../ImageGallery/ImageGallery";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 import Modal from "../Modal/Modal";
+import GlobalStyle from "./App.styled";
 
 const KEY = "24382871-0dfafbe4154b35f3845ecea69";
 const BASE_URL = "https://pixabay.com/api/";
@@ -16,10 +17,6 @@ class App extends Component {
     status: "idle",
     id: "",
   };
-
-  componentDidMount() {
-    console.log("компонент заренделился");
-  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.filter !== this.state.filter) {
@@ -74,12 +71,18 @@ class App extends Component {
     const { data, status } = this.state;
 
     if (status === "idle") {
-      return <Searchbar onSubmit={this.onHandleSubmit} />;
+      return (
+        <>
+          <GlobalStyle />
+          <Searchbar onSubmit={this.onHandleSubmit} />
+        </>
+      );
     }
 
     if (status === "pending") {
       return (
         <>
+          <GlobalStyle />
           <Searchbar onSubmit={this.onHandleSubmit} />
           <Loader />
         </>
@@ -89,6 +92,7 @@ class App extends Component {
     if (status === "resolved") {
       return (
         <>
+          <GlobalStyle />
           <Searchbar onSubmit={this.onHandleSubmit} />
           <ImageGallery data={data} onImageClick={this.onImageClick} />
           <Button data={data} onClick={this.onButtonClick} />

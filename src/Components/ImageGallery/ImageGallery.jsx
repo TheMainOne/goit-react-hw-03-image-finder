@@ -1,11 +1,12 @@
 import React from "react";
 import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
+import { Gallery } from "./ImageGallery.styled";
 
 const ImageGallery = ({ data, onImageClick }) => {
   return (
-    <ul className="gallery">
+    <Gallery className="gallery">
       <ImageGalleryItem data={data} onImageClick={onImageClick}/>
-    </ul>
+    </Gallery>
   );
 };
 
