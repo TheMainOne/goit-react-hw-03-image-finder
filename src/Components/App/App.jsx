@@ -29,7 +29,6 @@ class App extends Component {
         .then((response) => {
           this.setState({ data: [...response.hits], status: "resolved" });
         });
-      console.log("компонент обновился");
     }
   }
 
@@ -96,7 +95,12 @@ class App extends Component {
           <Searchbar onSubmit={this.onHandleSubmit} />
           <ImageGallery data={data} onImageClick={this.onImageClick} />
           <Button data={data} onClick={this.onButtonClick} />
-          <Modal data={data} id={this.state.id} />
+          <Modal
+            data={data}
+            id={this.state.id}
+            closeModal={this.onModalClose}
+            onModalShow={this.onModalShow}
+          />
         </>
       );
     }
