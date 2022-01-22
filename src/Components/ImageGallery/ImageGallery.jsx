@@ -1,10 +1,10 @@
 import React from "react";
 import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 
-const ImageGallery = ({ data }) => {
+const ImageGallery = ({ data, onImageClick }) => {
   return (
     <ul className="gallery">
-      <ImageGalleryItem data={data}/>
+      <ImageGalleryItem data={data} onImageClick={onImageClick}/>
     </ul>
   );
 };
