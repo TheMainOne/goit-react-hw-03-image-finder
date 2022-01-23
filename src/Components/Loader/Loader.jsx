@@ -10,4 +10,11 @@ const Loader = () => {
   );
 };
 
+export const BtnLoader = () => {
+   return (
+    <LoaderStyles>
+      <TailSpin heigth={50} width={50} color="grey" ariaLabel="loading" />
+    </LoaderStyles>
+  );
+}
 export default Loader;

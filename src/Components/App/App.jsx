@@ -48,6 +48,8 @@ class App extends Component {
     const { filter } = this.state;
     counter += 1;
 
+    this.setState({ status: 'load' });
+
     fetchImagesWithQuery(filter, counter).then((response) => {
       this.setState((prevState) => {
         const newState = {
@@ -95,7 +97,7 @@ class App extends Component {
       );
     }
 
-    if (status === "resolved") {
+    if (status === "resolved" || status === 'load') {
       return (
         <>
           <GlobalStyle />
@@ -105,6 +107,7 @@ class App extends Component {
             data={data}
             onClick={this.onButtonClick}
             endOfList={endOfList}
+            status={status}
           />
           <Toaster position="top-right" />
           {data && (
