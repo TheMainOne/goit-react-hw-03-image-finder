@@ -4,7 +4,7 @@ import ImageGallery from "../ImageGallery/ImageGallery";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 import Modal from "../Modal/Modal";
-import GlobalStyle from "./App.styled";
+import GlobalStyle from "./GlobalStyles";
 
 const KEY = "24382871-0dfafbe4154b35f3845ecea69";
 const BASE_URL = "https://pixabay.com/api/";
@@ -67,7 +67,7 @@ class App extends Component {
   };
 
   render() {
-    const { data, status } = this.state;
+    const { data, status, id } = this.state;
 
     if (status === "idle") {
       return (
@@ -95,12 +95,12 @@ class App extends Component {
           <Searchbar onSubmit={this.onHandleSubmit} />
           <ImageGallery data={data} onImageClick={this.onImageClick} />
           <Button data={data} onClick={this.onButtonClick} />
-          <Modal
+          {data && <Modal
             data={data}
-            id={this.state.id}
+            id={id}
             closeModal={this.onModalClose}
             onModalShow={this.onModalShow}
-          />
+          />}
         </>
       );
     }
