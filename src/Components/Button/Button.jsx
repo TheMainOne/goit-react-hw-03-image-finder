@@ -2,16 +2,20 @@ import React from "react";
 import propTypes from "prop-types";
 import { LoadMoreBtn, Wrapper } from "./Button.styled";
 
-const Button = ({ data, onClick }) => {
-  // console.log(data);
-  //   console.log(onClick);
+const Button = ({ data, onClick, endOfList }) => {
   return (
     <>
       {data.length > 11 ? (
         <Wrapper>
-          <LoadMoreBtn type="button" onClick={onClick}>
-            Load more
-          </LoadMoreBtn>
+          {endOfList ? (
+            <LoadMoreBtn type="button" disabled="disabled">
+              No more pictures available
+            </LoadMoreBtn>
+          ) : (
+            <LoadMoreBtn type="button" onClick={onClick}>
+              Load more
+            </LoadMoreBtn>
+          )}
         </Wrapper>
       ) : (
         <Wrapper>

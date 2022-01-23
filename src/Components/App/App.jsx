@@ -15,6 +15,7 @@ class App extends Component {
     data: [],
     status: "idle",
     id: "",
+    endOfList: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -35,7 +36,7 @@ class App extends Component {
     const notify = () => toast.error("Please enter a search query");
 
     if (inputValue) {
-      this.setState({ filter: inputValue });
+      this.setState({ filter: inputValue, endOfList: false });
       form.reset();
       counter = 1;
     } else {
@@ -49,10 +50,18 @@ class App extends Component {
 
     fetchImagesWithQuery(filter, counter).then((response) => {
       this.setState((prevState) => {
+
         const newState = {
           data: [...prevState.data, ...response],
           status: "resolved",
         };
+
+        if (response.length === 0) {
+          const updateState = {
+            endOfList: true,
+          }
+          return updateState;
+        }
         return newState;
       })
     });
@@ -65,7 +74,7 @@ class App extends Component {
   };
 
   render() {
-    const { data, status, id } = this.state;
+    const { data, status, id, endOfList } = this.state;
 
     if (status === "idle") {
       return (
@@ -93,7 +102,7 @@ class App extends Component {
           <GlobalStyle />
           <Searchbar onSubmit={this.onHandleSubmit} />
           <ImageGallery data={data} onImageClick={this.onImageClick} />
-          <Button data={data} onClick={this.onButtonClick} />
+          <Button data={data} onClick={this.onButtonClick} endOfList={endOfList}/>
           <Toaster position="top-right" />
           {data && (
             <Modal
