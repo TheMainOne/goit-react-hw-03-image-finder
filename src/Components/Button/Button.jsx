@@ -3,8 +3,8 @@ import propTypes from "prop-types";
 import { LoadMoreBtn, Wrapper } from "./Button.styled";
 
 const Button = ({ data, onClick }) => {
-  console.log(data);
-    console.log(onClick);
+  // console.log(data);
+  //   console.log(onClick);
   return (
     <>
       {data.length > 11 ? (

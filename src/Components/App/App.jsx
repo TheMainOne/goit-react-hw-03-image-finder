@@ -5,11 +5,9 @@ import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 import Modal from "../Modal/Modal";
 import GlobalStyle from "./GlobalStyles";
+import { fetchImagesWithQuery } from "../API/services";
 
-const KEY = "24382871-0dfafbe4154b35f3845ecea69";
-const BASE_URL = "https://pixabay.com/api/";
 let counter = 1;
-
 class App extends Component {
   state = {
     filter: "",
@@ -19,16 +17,13 @@ class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
+    const { filter } = this.state;
     if (prevState.filter !== this.state.filter) {
-      this.setState({ data: [], status: "pending" });
+      this.setState({ status: "pending" });
 
-      fetch(
-        `${BASE_URL}?q=${this.state.filter}&page=1&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-      )
-        .then((res) => res.json())
-        .then((response) => {
-          this.setState({ data: [...response.hits], status: "resolved" });
-        });
+      fetchImagesWithQuery(filter, 1).then((response) => {
+        this.setState({ data: [...response], status: "resolved" });
+      });
     }
   }
 
@@ -42,22 +37,34 @@ class App extends Component {
   };
 
   onButtonClick = () => {
+    const { filter } = this.state;
     counter += 1;
 
-    fetch(
-      `${BASE_URL}?q=${this.state.filter}&page=${counter}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-    )
-      .then((res) => res.json())
-      .then((response) => {
-        this.setState((prevState) => {
-          const newState = {
-            data: [...prevState.data, ...response.hits],
-            status: "resolved",
-          };
+    fetchImagesWithQuery(filter, counter).then((response) => {
+      this.setState((prevState) => {
+        const newState = {
+          data: [...prevState.data, ...response],
+          status: "resolved",
+        };
 
-          return newState;
-        });
+        return newState;
       });
+    });
+
+    // fetch(
+    //   `${BASE_URL}?q=${this.state.filter}&page=${counter}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
+    // )
+    //   .then((res) => res.json())
+    //   .then((response) => {
+    //     this.setState((prevState) => {
+    //       const newState = {
+    //         data: [...prevState.data, ...response.hits],
+    //         status: "resolved",
+    //       };
+
+    //       return newState;
+    //     });
+    //   });
   };
 
   onImageClick = (event) => {
@@ -95,12 +102,14 @@ class App extends Component {
           <Searchbar onSubmit={this.onHandleSubmit} />
           <ImageGallery data={data} onImageClick={this.onImageClick} />
           <Button data={data} onClick={this.onButtonClick} />
-          {data && <Modal
-            data={data}
-            id={id}
-            closeModal={this.onModalClose}
-            onModalShow={this.onModalShow}
-          />}
+          {data && (
+            <Modal
+              data={data}
+              id={id}
+              closeModal={this.onModalClose}
+              onModalShow={this.onModalShow}
+            />
+          )}
         </>
       );
     }
