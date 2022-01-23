@@ -50,7 +50,6 @@ class App extends Component {
 
     fetchImagesWithQuery(filter, counter).then((response) => {
       this.setState((prevState) => {
-
         const newState = {
           data: [...prevState.data, ...response],
           status: "resolved",
@@ -59,11 +58,11 @@ class App extends Component {
         if (response.length === 0) {
           const updateState = {
             endOfList: true,
-          }
+          };
           return updateState;
         }
         return newState;
-      })
+      });
     });
   };
 
@@ -102,7 +101,11 @@ class App extends Component {
           <GlobalStyle />
           <Searchbar onSubmit={this.onHandleSubmit} />
           <ImageGallery data={data} onImageClick={this.onImageClick} />
-          <Button data={data} onClick={this.onButtonClick} endOfList={endOfList}/>
+          <Button
+            data={data}
+            onClick={this.onButtonClick}
+            endOfList={endOfList}
+          />
           <Toaster position="top-right" />
           {data && (
             <Modal
