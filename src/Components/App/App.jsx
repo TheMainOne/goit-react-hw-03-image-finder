@@ -32,12 +32,12 @@ class App extends Component {
     event.preventDefault();
     const inputValue = event.target.elements.input.value;
     const form = event.target;
-    const notify = () => toast.error('Please enter a search query');
-    console.log(inputValue);
+    const notify = () => toast.error("Please enter a search query");
+
     if (inputValue) {
-    this.setState({ filter: inputValue });
-    form.reset();
-    counter = 1;
+      this.setState({ filter: inputValue });
+      form.reset();
+      counter = 1;
     } else {
       notify();
     }
@@ -53,9 +53,8 @@ class App extends Component {
           data: [...prevState.data, ...response],
           status: "resolved",
         };
-
         return newState;
-      });
+      })
     });
   };
 
@@ -73,7 +72,7 @@ class App extends Component {
         <>
           <GlobalStyle />
           <Searchbar onSubmit={this.onHandleSubmit} />
-          <Toaster position="top-right"/>
+          <Toaster position="top-right" />
         </>
       );
     }
@@ -95,7 +94,7 @@ class App extends Component {
           <Searchbar onSubmit={this.onHandleSubmit} />
           <ImageGallery data={data} onImageClick={this.onImageClick} />
           <Button data={data} onClick={this.onButtonClick} />
-          <Toaster position="top-right"/>
+          <Toaster position="top-right" />
           {data && (
             <Modal
               data={data}
