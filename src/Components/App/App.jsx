@@ -34,6 +34,7 @@ class App extends Component {
 
     this.setState({ filter: inputValue });
     form.reset();
+    counter = 1;
   };
 
   onButtonClick = () => {
@@ -50,21 +51,6 @@ class App extends Component {
         return newState;
       });
     });
-
-    // fetch(
-    //   `${BASE_URL}?q=${this.state.filter}&page=${counter}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-    // )
-    //   .then((res) => res.json())
-    //   .then((response) => {
-    //     this.setState((prevState) => {
-    //       const newState = {
-    //         data: [...prevState.data, ...response.hits],
-    //         status: "resolved",
-    //       };
-
-    //       return newState;
-    //     });
-    //   });
   };
 
   onImageClick = (event) => {
