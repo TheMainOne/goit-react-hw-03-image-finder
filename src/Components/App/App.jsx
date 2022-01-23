@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import Searchbar from "./Searchbar/Searchbar";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import Button from "../Button/Button";
@@ -31,10 +32,15 @@ class App extends Component {
     event.preventDefault();
     const inputValue = event.target.elements.input.value;
     const form = event.target;
-
+    const notify = () => toast.error('Please enter a search query');
+    console.log(inputValue);
+    if (inputValue) {
     this.setState({ filter: inputValue });
     form.reset();
     counter = 1;
+    } else {
+      notify();
+    }
   };
 
   onButtonClick = () => {
@@ -67,6 +73,7 @@ class App extends Component {
         <>
           <GlobalStyle />
           <Searchbar onSubmit={this.onHandleSubmit} />
+          <Toaster position="top-right"/>
         </>
       );
     }
@@ -88,6 +95,7 @@ class App extends Component {
           <Searchbar onSubmit={this.onHandleSubmit} />
           <ImageGallery data={data} onImageClick={this.onImageClick} />
           <Button data={data} onClick={this.onButtonClick} />
+          <Toaster position="top-right"/>
           {data && (
             <Modal
               data={data}
