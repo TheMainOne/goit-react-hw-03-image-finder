@@ -8,23 +8,27 @@ import Modal from "../Modal/Modal";
 import GlobalStyle from "./GlobalStyles";
 import { fetchImagesWithQuery } from "../API/services";
 
-let counter = 1;
 class App extends Component {
   state = {
     filter: "",
     data: [],
+    counter: 1,
     status: "idle",
     id: "",
     endOfList: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { filter } = this.state;
+    const { filter, counter } = this.state;
     if (prevState.filter !== this.state.filter) {
       this.setState({ status: "pending" });
 
-      fetchImagesWithQuery(filter, 1).then((response) => {
-        this.setState({ data: [...response], status: "resolved" });
+      fetchImagesWithQuery(filter, counter).then((response) => {
+        this.setState({
+          data: [...response],
+          status: "resolved",
+          counter: counter + 1,
+        });
       });
     }
   }
@@ -36,19 +40,17 @@ class App extends Component {
     const notify = () => toast.error("Please enter a search query");
 
     if (inputValue) {
-      this.setState({ filter: inputValue, endOfList: false });
+      this.setState({ filter: inputValue, endOfList: false, counter: 1 });
       form.reset();
-      counter = 1;
     } else {
       notify();
     }
   };
 
   onButtonClick = () => {
-    const { filter } = this.state;
-    counter += 1;
+    const { filter, counter } = this.state;
 
-    this.setState({ status: 'load' });
+    this.setState({ status: "load", counter: counter + 1 });
 
     fetchImagesWithQuery(filter, counter).then((response) => {
       this.setState((prevState) => {
@@ -97,7 +99,7 @@ class App extends Component {
       );
     }
 
-    if (status === "resolved" || status === 'load') {
+    if (status === "resolved" || status === "load") {
       return (
         <>
           <GlobalStyle />
